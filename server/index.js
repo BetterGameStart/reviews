@@ -24,30 +24,44 @@ app.get('/reviews/:gameId', (req, res) => {
   });
 });
 
-app.post('/reviews/:gameId', jsonParser, (req, res) => {
-  db.Review.findById(req.body.id, (err, review) => {
+// app.post('/reviews/:gameId', jsonParser, (req, res) => {
+//   db.Review.findById(req.body.id, (err, review) => {
+//     if (err) {
+//       res.status(500).send(err);
+//     } else if (req.body.voteString === 'yes') {
+//       review.meta.helpful += 1;
+//       review.save((error) => {
+//         if (err) {
+//           res.status(500).send(error);
+//         } else {
+//           res.status(202).send();
+//         }
+//       });
+//     } else if (req.body.voteString === 'no') {
+//       review.meta.unhelpful += 1;
+//       review.save((error) => {
+//         if (err) {
+//           res.status(500).send(error);
+//         } else {
+//           res.status(202).send();
+//         }
+//       });
+//     } else {
+//       res.status(400).send(`"Bad Vote String: ${req.body.voteString}"`);
+//     }
+//   });
+// });
+app.delete('/reviews/:gameId', (req, res) => {
+  // if req.params gameId exist
+  db.Review.deleteOne({gameId: req.params.gameId}, (err) => {
     if (err) {
-      res.status(500).send(err);
-    } else if (req.body.voteString === 'yes') {
-      review.meta.helpful += 1;
-      review.save((error) => {
-        if (err) {
-          res.status(500).send(error);
-        } else {
-          res.status(202).send();
-        }
-      });
-    } else if (req.body.voteString === 'no') {
-      review.meta.unhelpful += 1;
-      review.save((error) => {
-        if (err) {
-          res.status(500).send(error);
-        } else {
-          res.status(202).send();
-        }
-      });
+      res.status(500);
+      res.end();
     } else {
-      res.status(400).send(`"Bad Vote String: ${req.body.voteString}"`);
+      res.status(200);
+      res.end();
     }
   });
+  // then delete
+  // else return error
 });
