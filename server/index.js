@@ -5,7 +5,6 @@ const db = require('./db/index.js');
 
 const app = express();
 const PORT = 3002;
-const jsonParser = bodyParser.json();
 
 app.listen(PORT, () => {
   console.log(`Now listening on port ${PORT}!`);
@@ -13,6 +12,8 @@ app.listen(PORT, () => {
 
 app.use(express.static('public'));
 app.use('/games/:gameId', express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/reviews/:gameId', (req, res) => {
   db.Review.find({ gameId: req.params.gameId }, (err, result) => {
@@ -75,6 +76,19 @@ app.get('/review/:id', (req, res) => {
       res.end();
     } else {
       res.send(data);
+      res.end();
+    }
+  });
+});
+
+app.post('/review', (req, res) => {
+  const review = new db.Review(req.body);
+  review.save((err) => {
+    if (err) {
+      res.status(500);
+      res.end();
+    } else {
+      res.status(201);
       res.end();
     }
   });
