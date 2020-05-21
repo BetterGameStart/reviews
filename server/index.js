@@ -51,9 +51,11 @@ app.get('/reviews/:gameId', (req, res) => {
 //     }
 //   });
 // });
-app.delete('/reviews/:gameId', (req, res) => {
+
+app.delete('/review/:gameId', (req, res) => {
   // if req.params gameId exist
-  db.Review.deleteOne({gameId: req.params.gameId}, (err) => {
+  const id = String(req.params.gameId);
+  db.Review.deleteOne({ _id: id }, (err) => {
     if (err) {
       res.status(500);
       res.end();
@@ -62,6 +64,18 @@ app.delete('/reviews/:gameId', (req, res) => {
       res.end();
     }
   });
-  // then delete
-  // else return error
+});
+
+app.get('/review/:id', (req, res) => {
+  const id = String(req.params.id);
+  db.Review.findOne({ _id: id }, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(500);
+      res.end();
+    } else {
+      res.send(data);
+      res.end();
+    }
+  });
 });
