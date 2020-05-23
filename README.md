@@ -51,5 +51,7 @@ npm start
 ```
 
 ### API
-
-(TODO: DOCUMENT INTERNALS OF APP.JSX)
+- Create '/review/' Post
+- Update '/review/:id' Put
+- Delete '/review/:id' Delete
+- Read   '/review/:id' Get
