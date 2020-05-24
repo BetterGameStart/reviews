@@ -25,7 +25,7 @@ function tenMil(writer, encode, cb) {
       const review = faker.lorem.paragraph();
       const recommend = faker.random.boolean();
       const nickname = faker.internet.userName();
-      const location = faker.fake('{{address.city}}, {{address.state}}');
+      const location = faker.fake('{{address.city}} {{address.state}}');
       const email = faker.internet.email();
       const buyForSelf = faker.random.boolean();
       const ageBracket = Math.ceil(Math.random() * 8);

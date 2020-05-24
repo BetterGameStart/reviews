@@ -7,7 +7,7 @@
   "scripts": {
     "build-d": "webpack --config webpack.dev.js",
     "build-p": "webpack --config webpack.prod.js",
-    "data": "node server/script/data.js",
+    "data": "node --max-old-space-size=8192 server/script/data.js",
     "dev-start": "nodemon server/index.js --ignore 'client/' --ignore 'public/'",
     "start": "node server/index.js",
     "seed": "node server/db/seeder.js",
