@@ -32,7 +32,7 @@ const ReviewTiny = (props) => {
         ...
       </Text>
       <Text>
-        {`${review.meta.helpful} of ${review.meta.helpful + review.meta.unhelpful} people found this helpful`}
+        {`${review.helpful} of ${review.helpful + review.unhelpful} people found this helpful`}
       </Text>
     </div>
   );
@@ -42,7 +42,7 @@ export default ReviewTiny;
 
 ReviewTiny.propTypes = {
   review: PropTypes.shape({
-    _id: PropTypes.string,
+    id: PropTypes.string,
     gameId: PropTypes.number,
     date: PropTypes.string,
     overall: PropTypes.number,
@@ -62,10 +62,8 @@ ReviewTiny.propTypes = {
     purchaseOnline: PropTypes.bool,
     readReviews: PropTypes.bool,
     recommendBGS: PropTypes.number,
-    meta: PropTypes.shape({
-      helpful: PropTypes.number,
-      unhelpful: PropTypes.number,
-    }),
+    helpful: PropTypes.number,
+    unhelpful: PropTypes.number,
   }).isRequired,
   title: PropTypes.string.isRequired,
 };

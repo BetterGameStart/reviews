@@ -64,8 +64,8 @@ const Container = styled.div`
 
 function mostHelpful(reviews) {
   return reviews.reduce((best, current) => {
-    const helpfulness = (review) => (review.meta.helpful
-      / (review.meta.helpful + review.meta.unhelpful));
+    const helpfulness = (review) => (review.helpful
+      / (review.helpful + review.unhelpful));
 
     if (helpfulness(current) > helpfulness(best)) {
       return current;
@@ -139,8 +139,8 @@ class App extends React.Component {
 
   fetchReviews(currentGame = this.state.currentGame) {
     fetch(`${this.REVIEWSBASE}${currentGame}`)
-      .then((response) => response.json())
-      .then((data) => { this.digestReviews(currentGame, data); })
+      .then((response) => { return response.json(); })
+      .then((data) => { console.log(data);return this.digestReviews(currentGame, data._rs.rows); })
       .then(() => { this.applyFilter(); })
       .then(() => { this.checkFavorable(); })
       .catch((err) => { console.log(err); });
@@ -156,7 +156,6 @@ class App extends React.Component {
     let graphicSum = 0;
     let gameplaySum = 0;
     let appealSum = 0;
-
     for (let i = 0; i < reviews.length; i += 1) {
       if (reviews[i].overall === 1) {
         oneStarCount += 1;

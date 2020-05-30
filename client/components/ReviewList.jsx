@@ -5,7 +5,6 @@ import ReviewListItem from './ReviewListItem';
 
 const ReviewList = (props) => {
   const { reviews, endpoint, redraw } = props;
-
   return (
     <>
       {reviews.map((review) => (
