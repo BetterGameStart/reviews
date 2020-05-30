@@ -67,9 +67,9 @@ const ReviewListItem = (props) => {
         <ReviewRecommend recommend={review.recommend} />
         <ReviewRatings review={review} />
         <ReviewHelpful
-          yes={review.meta.helpful}
-          no={review.meta.unhelpful}
-          id={review._id}
+          yes={review.helpful}
+          no={review.unhelpful}
+          id={review.id}
           endpoint={endpoint}
           redraw={redraw}
         />
@@ -82,7 +82,7 @@ export default ReviewListItem;
 
 ReviewListItem.propTypes = {
   review: PropTypes.shape({
-    _id: PropTypes.string,
+    id: PropTypes.string,
     gameId: PropTypes.number,
     date: PropTypes.string,
     overall: PropTypes.number,
@@ -102,10 +102,8 @@ ReviewListItem.propTypes = {
     purchaseOnline: PropTypes.bool,
     readReviews: PropTypes.bool,
     recommendBGS: PropTypes.number,
-    meta: PropTypes.shape({
-      helpful: PropTypes.number,
-      unhelpful: PropTypes.number,
-    }),
+    helpful: PropTypes.number,
+    unhelpful: PropTypes.number,
   }).isRequired,
   endpoint: PropTypes.string.isRequired,
   redraw: PropTypes.func.isRequired,

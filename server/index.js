@@ -16,13 +16,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/reviews/:gameId', (req, res) => {
-  db.Review.find({ gameId: req.params.gameId }, (err, result) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send(result);
-    }
-  });
+  db.getAll(req.params.gameId)
+    .then((data) => {
+      res.status(200);
+      res.send(data);
+      res.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500);
+      res.end();
+    });
 });
 
 // app.post('/reviews/:gameId', jsonParser, (req, res) => {
