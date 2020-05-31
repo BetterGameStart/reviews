@@ -1,4 +1,3 @@
-'use strict'
 const key = require('./utility');
 /**
  * New Relic agent configuration.

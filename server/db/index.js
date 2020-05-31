@@ -18,7 +18,7 @@ mapReview.getReviews = mapReview.mapWithQuery(query, ((review) => [review]));
 
 async function read(id) {
   try {
-    const review = await mapReview.find({ id: id });
+    const review = await mapReview.find({ id });
     return review;
   } catch (err) {
     return err;
