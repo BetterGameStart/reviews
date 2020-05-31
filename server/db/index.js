@@ -18,7 +18,7 @@ mapReview.getReviews = mapReview.mapWithQuery(query, ((review) => [review]));
 
 async function read(id) {
   try {
-    const review = await mapReview.get({ id:id });
+    const review = await mapReview.find({ id: id });
     return review;
   } catch (err) {
     return err;
@@ -34,31 +34,31 @@ async function getAllReviews(gameId) {
   }
 }
 
-async function destroy(id) {
-  try {
-    await mapReview.remove({ id });
-    return 'deleted!';
-  } catch (err) {
-    return err;
-  }
+function destroy(id, cb) {
+  const deleteQuery = 'delete from review where id = ?';
+  client.execute(deleteQuery, [id], { prepare: true, hints: ['int'] }, (err) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null);
+    }
+  });
 }
 
 async function create(data) {
-  try {
-    await mapReview.insert(data);
-    return 'created!';
-  } catch (err) {
-    return err;
-  }
+  await mapReview.insert(data)
+    .then(() => 'added')
+    .catch((err) => {
+      throw err;
+    });
 }
 
 async function update(data) {
-  try {
-    await mapReview.update(data);
-    return 'updated!';
-  } catch (err) {
-    return err;
-  }
+  await mapReview.update(data)
+    .then(() => 'updated!')
+    .catch((err) => {
+      throw err;
+    });
 }
 
 

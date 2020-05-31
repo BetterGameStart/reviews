@@ -3,3 +3,4 @@ public/app.js
 public/app.js.map
 client/components/TEMPLATE.jsx
 review.csv
+utility.js

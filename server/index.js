@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -29,38 +30,22 @@ app.get('/reviews/:gameId', (req, res) => {
     });
 });
 
-// app.post('/reviews/:gameId', jsonParser, (req, res) => {
-//   db.Review.findById(req.body.id, (err, review) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else if (req.body.voteString === 'yes') {
-//       review.meta.helpful += 1;
-//       review.save((error) => {
-//         if (err) {
-//           res.status(500).send(error);
-//         } else {
-//           res.status(202).send();
-//         }
-//       });
-//     } else if (req.body.voteString === 'no') {
-//       review.meta.unhelpful += 1;
-//       review.save((error) => {
-//         if (err) {
-//           res.status(500).send(error);
-//         } else {
-//           res.status(202).send();
-//         }
-//       });
-//     } else {
-//       res.status(400).send(`"Bad Vote String: ${req.body.voteString}"`);
-//     }
-//   });
-// });
+app.post('/review', (req, res) => {
+  db.post(req.body)
+    .then(() => {
+      res.status(201);
+      res.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500);
+      res.end();
+    });
+});
 
-app.delete('/review/:gameId', (req, res) => {
+app.delete('/review/:id', (req, res) => {
   // if req.params gameId exist
-  const id = String(req.params.gameId);
-  db.Review.deleteOne({ _id: id }, (err) => {
+  db.delete(req.params.id, (err) => {
     if (err) {
       res.status(500);
       res.end();
@@ -72,28 +57,27 @@ app.delete('/review/:gameId', (req, res) => {
 });
 
 app.get('/review/:id', (req, res) => {
-  const id = String(req.params.id);
-  db.Review.findOne({ _id: id }, (err, data) => {
-    if (err) {
-      console.log(err);
+  db.get(req.params.id)
+    .then(({ _rs }) => {
+      res.status(200);
+      res.send(_rs.rows[0]);
+      res.end();
+    })
+    .catch((err) => {
       res.status(500);
       res.end();
-    } else {
-      res.send(data);
-      res.end();
-    }
-  });
+      console.log(err);
+    });
 });
 
-app.put('/review/:id', (req, res) => {
-  const id = String(req.params.id);
-  db.Review.findOneAndUpdate({ _id: id }, req.body, (err) => {
-    if (err) {
-      res.status(500);
-      res.end();
-    } else {
+app.put('/review', (req, res) => {
+  db.put(req.body)
+    .then(() => {
       res.status(200);
       res.end();
-    }
-  });
+    })
+    .catch(() => {
+      res.send(500);
+      res.end();
+    });
 });
