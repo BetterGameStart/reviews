@@ -1,6 +1,7 @@
 # Reviews
 
 > This is a module designed to handle reviews for a large online video game retailer. With suitable changes to the database schema it could easily be adapted to other applications.
+
 ![demo](demo/GameStart-Demo.gif)
 ## Related Projects
 
