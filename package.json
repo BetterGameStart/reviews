@@ -73,7 +73,7 @@
     "jest-styled-components": "^7.0.2",
     "nodemon": "^2.0.3",
     "react-test-renderer": "^16.13.1",
-    "webpack": "^4.43.0"
+    "webpack": "^5.94.0"
   },
   "jest": {
     "setupFilesAfterEnv": [
